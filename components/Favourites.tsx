@@ -25,102 +25,97 @@ const Favourites = ({item, setFav}: any) => {
   const isDarkMode = useColorScheme() === 'dark';
   const themeBackground = isDarkMode ? Colors.darker : Colors.lighter;
   const themeText = isDarkMode ? Colors.lighter : Colors.darker;
-  const [favData, setFavData] = useState<Country[]>(item);
-  // useEffect(() => {
-  //   uniqueArray();
-  // }, []);
+  const [favData, setFavData] = useState<Country[]>([]);
+  useEffect(() => {
+    uniqueArray();
+  }, [item]);
   const uniqueArray = async () => {
-    // const ids = await item.map((data: any) => data?.name.common);
-    // console.log('ids', ids);
-    // const filtered = await item.filter(
-    //   (title: any, index: any) => !ids.includes(title?.name?.common, index + 1),
-    // );
-    // setCountryData(filtered);
-    // console.log(filtered, 'filtered');
-
-    setFavData(item);
+    const uniqueArray = await item.map((obj: any) => JSON.stringify(obj));
+    const uniqueSet = new Set(uniqueArray);
+    const value = Array.from(uniqueSet).map((str: any) => JSON.parse(str));
+    setFavData([...value]);
   };
-  console.log('base', item);
   return (
     <View style={{flex: 1}}>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-evenly',
-          alignItems: 'center',
-        }}>
-        <Text style={[styles.head, {color: isDarkMode ? '#fff' : '#2c3e8f'}]}>
-          Your Favourites
-        </Text>
-        <TouchableOpacity
-          onPress={() => {
-            setFav([]);
-            setFavData([]);
-          }}
-          style={styles.clear}>
-          <Text
-            style={{color: '#000', textAlign: 'center', fontWeight: 'bold'}}>
-            Clear
-          </Text>
-          <Icon1 name="closecircleo" size={16} color="#000" />
-        </TouchableOpacity>
-      </View>
-
       {item.length > 0 && item && (
-        <FlatList
-          data={favData}
-          renderItem={({item}) => (
-            <View
-              key={item.name.common}
-              style={[
-                styles.flatlist,
-                {
-                  backgroundColor: isDarkMode ? '#3d3f45' : '#fff',
-                  borderColor: isDarkMode ? '#5d5e61' : '#dedfe3',
-                },
-              ]}>
-              <View style={styles.map}>
-                <View>
-                  <Text
-                    style={[
-                      styles.textHead,
-                      {color: isDarkMode ? '#fff' : '#2c3e8f', fontSize: 24},
-                    ]}>
-                    {item?.name?.common}
-                  </Text>
-                  <Text
-                    style={[
-                      styles.textHead,
-                      {color: isDarkMode ? '#fff' : '#2c3e8f'},
-                    ]}>
-                    {item?.capital?.[0]}
-                  </Text>
+        <>
+          <View style={styles.favHead}>
+            <Text
+              style={[styles.head, {color: isDarkMode ? '#fff' : '#2c3e8f'}]}>
+              Your Favourites
+            </Text>
+            <TouchableOpacity
+              onPress={() => {
+                setFav([]);
+                setFavData([]);
+              }}
+              style={styles.clear}>
+              <Text
+                style={{
+                  color: '#000',
+                  textAlign: 'center',
+                  fontWeight: 'bold',
+                }}>
+                Clear
+              </Text>
+              <Icon1 name="closecircleo" size={16} color="#000" />
+            </TouchableOpacity>
+          </View>
+          <FlatList
+            data={favData}
+            renderItem={({item}) => (
+              <View
+                key={item.name.common}
+                style={[
+                  styles.flatlist,
+                  {
+                    backgroundColor: isDarkMode ? '#3d3f45' : '#fff',
+                    borderColor: isDarkMode ? '#5d5e61' : '#dedfe3',
+                  },
+                ]}>
+                <View style={styles.map}>
+                  <View>
+                    <Text
+                      style={[
+                        styles.textHead,
+                        {color: isDarkMode ? '#fff' : '#2c3e8f', fontSize: 24},
+                      ]}>
+                      {item?.name?.common}
+                    </Text>
+                    <Text
+                      style={[
+                        styles.textHead,
+                        {color: isDarkMode ? '#fff' : '#2c3e8f'},
+                      ]}>
+                      {item?.capital?.[0]}
+                    </Text>
+                  </View>
+                  <SvgUri height={50} width={70} uri={item?.flags?.svg} />
                 </View>
-                <SvgUri height={50} width={70} uri={item?.flags?.svg} />
-              </View>
 
-              <Text style={[styles.commonText, {color: themeText}]}>
-                Population : {item?.population}
-              </Text>
-              <Text style={[styles.commonText, {color: themeText}]}>
-                Area : {item?.area} KM & {Math.round(item?.area * 0.621371)}{' '}
-                Miles
-              </Text>
-              <Text style={[styles.commonText, {color: themeText}]}>
-                Languages Spoken : {Object.values(item?.languages).join(', ')}
-              </Text>
-              <Text style={[styles.commonText, {color: themeText}]}>
-                Timezone : {item?.timezones.join(', ')}
-              </Text>
-              <Text style={[styles.commonText, {color: themeText}]}>
-                Currency :
-                {item?.currencies[Object.keys(item?.currencies)[0]]?.name}{' '}
-                {item?.currencies[Object.keys(item?.currencies)[0]]?.symbol}
-              </Text>
-            </View>
-          )}
-          keyExtractor={item => item.name.common}
-        />
+                <Text style={[styles.commonText, {color: themeText}]}>
+                  Population : {item?.population}
+                </Text>
+                <Text style={[styles.commonText, {color: themeText}]}>
+                  Area : {item?.area} KM & {Math.round(item?.area * 0.621371)}{' '}
+                  Miles
+                </Text>
+                <Text style={[styles.commonText, {color: themeText}]}>
+                  Languages Spoken : {Object.values(item?.languages).join(', ')}
+                </Text>
+                <Text style={[styles.commonText, {color: themeText}]}>
+                  Timezone : {item?.timezones.join(', ')}
+                </Text>
+                <Text style={[styles.commonText, {color: themeText}]}>
+                  Currency :
+                  {item?.currencies[Object.keys(item?.currencies)[0]]?.name}{' '}
+                  {item?.currencies[Object.keys(item?.currencies)[0]]?.symbol}
+                </Text>
+              </View>
+            )}
+            keyExtractor={item => item.name.common}
+          />
+        </>
       )}
     </View>
   );
@@ -174,5 +169,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  favHead: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    marginBottom: 20,
   },
 });

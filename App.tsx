@@ -77,13 +77,8 @@ function App(): JSX.Element {
     }
   };
   const addFavourites = (item: Country) => {
-    // setFav(item);
     setFav(oldArray => [...oldArray, item]);
-    // fav.push(item);
-    // console.log(item);
   };
-  // console.log('res', fav);
-  // console.log(themeBackground);
   return (
     <SafeAreaView
       style={{flex: 1, backgroundColor: backgroundStyle.backgroundColor}}>
@@ -97,13 +92,7 @@ function App(): JSX.Element {
           backgroundColor: themeBackground,
         }}>
         <Text
-          style={{
-            fontSize: 25,
-            fontWeight: 'bold',
-            color: isDarkMode ? '#fff' : '#2c3e8f',
-            textAlign: 'center',
-            marginVertical: 30,
-          }}>
+          style={[styles.headerText, {color: isDarkMode ? '#fff' : '#2c3e8f'}]}>
           Country Explorer
         </Text>
         <View style={styles.searchContainer}>
@@ -133,7 +122,7 @@ function App(): JSX.Element {
         {countryData.length > 0 && countryData && (
           <FlatList
             data={countryData}
-            style={{flex: 1}}
+            style={{flex: 1, flexGrow: 0.6}}
             renderItem={({item}) => (
               <View
                 key={item.name.common}
@@ -195,7 +184,9 @@ function App(): JSX.Element {
             keyExtractor={item => item.name.common}
           />
         )}
-        {errorHandle && <Text style={styles.errText}>No Records Found!</Text>}
+        {errorHandle && (
+          <Text style={styles.errText}>Search Records Not Found!</Text>
+        )}
         {loading && (
           <View style={styles.loader}>
             <ActivityIndicator size="large" />
@@ -271,6 +262,8 @@ const styles = StyleSheet.create({
     padding: 10,
     borderWidth: 3.5,
     borderColor: '#dedfe3',
+    flexGrow: 0,
+    flex: 1,
   },
   map: {
     flexDirection: 'row',
@@ -294,6 +287,12 @@ const styles = StyleSheet.create({
   textHead: {
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  headerText: {
+    fontSize: 25,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginVertical: 30,
   },
 });
 
