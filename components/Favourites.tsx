@@ -10,7 +10,8 @@ import {
 import Icon1 from 'react-native-vector-icons/AntDesign';
 import {SvgUri} from 'react-native-svg';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import React, {useEffect, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
+import TextComponent from './TextComponent';
 interface Country {
   capital: string[];
   name: {common: string};
@@ -21,29 +22,34 @@ interface Country {
   currencies: Record<string, {name: string; symbol: string}>;
   flags: {svg: string};
 }
-const Favourites = ({item, setFav}: any) => {
+const Favourites: FC<{item: Country[]; setFav: (args: Country[]) => void}> = ({
+  item,
+  setFav,
+}) => {
   const isDarkMode = useColorScheme() === 'dark';
-  const themeBackground = isDarkMode ? Colors.darker : Colors.lighter;
   const themeText = isDarkMode ? Colors.lighter : Colors.darker;
   const [favData, setFavData] = useState<Country[]>([]);
   useEffect(() => {
-    uniqueArray();
+    filterArray();
   }, [item]);
-  const uniqueArray = async () => {
-    const uniqueArray = await item.map((obj: any) => JSON.stringify(obj));
-    const uniqueSet = new Set(uniqueArray);
-    const value = Array.from(uniqueSet).map((str: any) => JSON.parse(str));
-    setFavData([...value]);
+  const filterArray = () => {
+    const uniqueSet = new Set(item);
+    // const value = Array.from(uniqueSet).map(str => str);
+    setFavData([...uniqueSet]);
   };
   return (
     <View style={{flex: 1}}>
       {item.length > 0 && item && (
         <>
           <View style={styles.favHead}>
-            <Text
-              style={[styles.head, {color: isDarkMode ? '#fff' : '#2c3e8f'}]}>
+            <TextComponent
+              size={25}
+              color={isDarkMode ? '#fff' : '#2c3e8f'}
+              fontWeight={'bold'}
+              marginVertical={15}
+              align="center">
               Your Favourites
-            </Text>
+            </TextComponent>
             <TouchableOpacity
               onPress={() => {
                 setFav([]);
@@ -75,42 +81,40 @@ const Favourites = ({item, setFav}: any) => {
                 ]}>
                 <View style={styles.map}>
                   <View>
-                    <Text
-                      style={[
-                        styles.textHead,
-                        {color: isDarkMode ? '#fff' : '#2c3e8f', fontSize: 24},
-                      ]}>
+                    <TextComponent
+                      size={25}
+                      color={isDarkMode ? '#fff' : '#2c3e8f'}
+                      fontWeight={'bold'}>
                       {item?.name?.common}
-                    </Text>
-                    <Text
-                      style={[
-                        styles.textHead,
-                        {color: isDarkMode ? '#fff' : '#2c3e8f'},
-                      ]}>
+                    </TextComponent>
+                    <TextComponent
+                      size={16}
+                      color={isDarkMode ? '#fff' : '#2c3e8f'}
+                      fontWeight={'bold'}>
                       {item?.capital?.[0]}
-                    </Text>
+                    </TextComponent>
                   </View>
                   <SvgUri height={50} width={70} uri={item?.flags?.svg} />
                 </View>
 
-                <Text style={[styles.commonText, {color: themeText}]}>
-                  Population : {item?.population}
-                </Text>
-                <Text style={[styles.commonText, {color: themeText}]}>
+                <TextComponent>
+                  Population : {item?.population.toLocaleString('en-IN')}
+                </TextComponent>
+                <TextComponent>
                   Area : {item?.area} KM & {Math.round(item?.area * 0.621371)}{' '}
                   Miles
-                </Text>
-                <Text style={[styles.commonText, {color: themeText}]}>
+                </TextComponent>
+                <TextComponent>
                   Languages Spoken : {Object.values(item?.languages).join(', ')}
-                </Text>
-                <Text style={[styles.commonText, {color: themeText}]}>
+                </TextComponent>
+                <TextComponent>
                   Timezone : {item?.timezones.join(', ')}
-                </Text>
-                <Text style={[styles.commonText, {color: themeText}]}>
+                </TextComponent>
+                <TextComponent>
                   Currency :
                   {item?.currencies[Object.keys(item?.currencies)[0]]?.name}{' '}
                   {item?.currencies[Object.keys(item?.currencies)[0]]?.symbol}
-                </Text>
+                </TextComponent>
               </View>
             )}
             keyExtractor={item => item.name.common}
@@ -159,7 +163,6 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: 'bold',
     textAlign: 'center',
-    // marginVertical: 10,
   },
   clear: {
     height: 28,
@@ -174,6 +177,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    marginBottom: 20,
   },
 });

@@ -21,6 +21,8 @@ import Icon1 from 'react-native-vector-icons/MaterialIcons';
 import Icon2 from 'react-native-vector-icons/Fontisto';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Favourites from './components/Favourites';
+import CountryCard from './components/ContryCard';
+import TextComponent from './components/TextComponent';
 
 interface Country {
   capital: string[];
@@ -91,10 +93,14 @@ function App(): JSX.Element {
           flex: 1,
           backgroundColor: themeBackground,
         }}>
-        <Text
-          style={[styles.headerText, {color: isDarkMode ? '#fff' : '#2c3e8f'}]}>
+        <TextComponent
+          size={25}
+          color={isDarkMode ? '#fff' : '#2c3e8f'}
+          fontWeight={'bold'}
+          marginVertical={20}
+          align="center">
           Country Explorer
-        </Text>
+        </TextComponent>
         <View style={styles.searchContainer}>
           <TextInput
             style={{flex: 1, color: themeText}}
@@ -122,64 +128,9 @@ function App(): JSX.Element {
         {countryData.length > 0 && countryData && (
           <FlatList
             data={countryData}
-            style={{flex: 1, flexGrow: 0.6}}
+            style={styles.flat}
             renderItem={({item}) => (
-              <View
-                key={item.name.common}
-                style={[
-                  styles.flatlist,
-                  {
-                    backgroundColor: isDarkMode ? '#3d3f45' : '#fff',
-                    borderColor: isDarkMode ? '#5d5e61' : '#dedfe3',
-                  },
-                ]}>
-                <View style={styles.map}>
-                  <View>
-                    <Text
-                      style={[
-                        styles.textHead,
-                        {color: isDarkMode ? '#fff' : '#2c3e8f', fontSize: 24},
-                      ]}>
-                      {item?.name?.common}
-                    </Text>
-                    <Text
-                      style={[
-                        styles.textHead,
-                        {color: isDarkMode ? '#fff' : '#2c3e8f'},
-                      ]}>
-                      {item?.capital?.[0]}
-                    </Text>
-                  </View>
-                  <View style={{flexDirection: 'row'}}>
-                    <SvgUri height={50} width={70} uri={item?.flags?.svg} />
-
-                    <TouchableOpacity
-                      onPress={() => addFavourites(item)}
-                      style={styles.searchArea}>
-                      <Icon2 name="favorite" size={25} color="#a39350" />
-                    </TouchableOpacity>
-                  </View>
-                </View>
-
-                <Text style={[styles.commonText, {color: themeText}]}>
-                  Population : {item?.population}
-                </Text>
-                <Text style={[styles.commonText, {color: themeText}]}>
-                  Area : {item?.area} KM & {Math.round(item?.area * 0.621371)}{' '}
-                  Miles
-                </Text>
-                <Text style={[styles.commonText, {color: themeText}]}>
-                  Languages Spoken : {Object.values(item?.languages).join(', ')}
-                </Text>
-                <Text style={[styles.commonText, {color: themeText}]}>
-                  Timezone : {item?.timezones.join(', ')}
-                </Text>
-                <Text style={[styles.commonText, {color: themeText}]}>
-                  Currency :
-                  {item?.currencies[Object.keys(item?.currencies)[0]]?.name}{' '}
-                  {item?.currencies[Object.keys(item?.currencies)[0]]?.symbol}
-                </Text>
-              </View>
+              <CountryCard item={item} addFavourites={addFavourites} />
             )}
             keyExtractor={item => item.name.common}
           />
@@ -246,7 +197,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'red',
     fontWeight: 'bold',
-    marginTop: 20,
+    marginVertical: 20,
   },
   searchArea: {
     height: 40,
@@ -294,6 +245,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginVertical: 30,
   },
+  flat: {flex: 1, flexGrow: 0.6},
 });
 
 export default App;
