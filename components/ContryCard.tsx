@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import {StyleSheet, useColorScheme, View, TouchableOpacity} from 'react-native';
 import {SvgUri} from 'react-native-svg';
-import Icon2 from 'react-native-vector-icons/Fontisto';
+import Favorite from 'react-native-vector-icons/Fontisto';
 import TextComponent from './TextComponent';
 
 const CountryCard: FC<{
@@ -40,7 +40,7 @@ const CountryCard: FC<{
           <TouchableOpacity
             onPress={() => addFavourites(item)}
             style={styles.searchArea}>
-            <Icon2 name="favorite" size={25} color="#a39350" />
+            <Favorite name="favorite" size={25} color="#a39350" />
           </TouchableOpacity>
         </View>
       </View>

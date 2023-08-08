@@ -7,11 +7,9 @@ import {
   StatusBar,
   StyleSheet,
   Text,
-  TextInput,
   useColorScheme,
   View,
   ActivityIndicator,
-  TouchableOpacity,
 } from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -36,7 +34,7 @@ const App: FC = () => {
       setLoading(true);
       const cachedData = await AsyncStorage.getItem(key.toLowerCase());
       if (cachedData !== null) {
-        console.log('cached');
+        // console.log('cached');
         let val = JSON.parse(cachedData);
         setCountryData(val);
         setLoading(false);
@@ -46,7 +44,7 @@ const App: FC = () => {
       const response = await axios.get(
         `https://restcountries.com/v3.1/name/${key}?fullText=true`,
       );
-      console.log('api');
+      // console.log('api');
       await AsyncStorage.setItem(
         key.toLowerCase(),
         JSON.stringify(response?.data),
@@ -85,30 +83,6 @@ const App: FC = () => {
           Country Explorer
         </TextComponent>
         <Search onSearchCountry={searchCountry} />
-        {/* <View style={styles.searchContainer}>
-          <TextInput
-            style={{flex: 1, color: themeText}}
-            value={search}
-            placeholder="Search Here"
-            onChangeText={e => setSearch(e)}
-            placeholderTextColor={'grey'}
-          />
-          {search.length > 0 && (
-            <TouchableOpacity
-              onPress={() => setSearch('')}
-              style={styles.searchArea}>
-              <Icon1 name="clear" size={25} color="grey" />
-            </TouchableOpacity>
-          )}
-
-          <TouchableOpacity
-            onPress={() => fetchdata(search)}
-            disabled={search.length < 1}
-            style={styles.searchArea}>
-            <Icon name="search" size={20} color="grey" />
-          </TouchableOpacity>
-        </View> */}
-
         {countryData.length > 0 && (
           <FlatList
             data={countryData}

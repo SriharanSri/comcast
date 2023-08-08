@@ -7,15 +7,14 @@ import {
   useColorScheme,
 } from 'react-native';
 import React, {FC, useState} from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome5';
-import Icon1 from 'react-native-vector-icons/MaterialIcons';
+import SearchIcon from 'react-native-vector-icons/FontAwesome5';
+import Clear from 'react-native-vector-icons/MaterialIcons';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 const Search: FC<{onSearchCountry: (args: string) => void}> = ({
   onSearchCountry,
 }) => {
   const isDarkMode = useColorScheme() === 'dark';
-  const themeBackground = isDarkMode ? Colors.darker : Colors.lighter;
   const themeText = isDarkMode ? Colors.lighter : Colors.darker;
   const [search, setSearch] = useState('');
   return (
@@ -31,7 +30,7 @@ const Search: FC<{onSearchCountry: (args: string) => void}> = ({
         <TouchableOpacity
           onPress={() => setSearch('')}
           style={styles.searchArea}>
-          <Icon1 name="clear" size={25} color="grey" />
+          <Clear name="clear" size={25} color="grey" />
         </TouchableOpacity>
       )}
 
@@ -39,7 +38,7 @@ const Search: FC<{onSearchCountry: (args: string) => void}> = ({
         onPress={() => onSearchCountry(search)}
         disabled={search.length < 1}
         style={styles.searchArea}>
-        <Icon name="search" size={20} color="grey" />
+        <SearchIcon name="search" size={20} color="grey" />
       </TouchableOpacity>
     </View>
   );

@@ -6,9 +6,8 @@ import {
   View,
   useColorScheme,
 } from 'react-native';
-import Icon1 from 'react-native-vector-icons/AntDesign';
+import Clear from 'react-native-vector-icons/AntDesign';
 import {SvgUri} from 'react-native-svg';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
 import React, {FC, useEffect, useState} from 'react';
 import TextComponent from './TextComponent';
 
@@ -51,7 +50,7 @@ const Favourites: FC<{item: Country[]; setFav: (args: Country[]) => void}> = ({
                 }}>
                 Clear
               </Text>
-              <Icon1 name="closecircleo" size={16} color="#000" />
+              <Clear name="closecircleo" size={16} color="#000" />
             </TouchableOpacity>
           </View>
           <FlatList
