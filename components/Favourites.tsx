@@ -11,16 +11,7 @@ import {SvgUri} from 'react-native-svg';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import React, {FC, useEffect, useState} from 'react';
 import TextComponent from './TextComponent';
-interface Country {
-  capital: string[];
-  name: {common: string};
-  population: number;
-  area: number;
-  languages: Record<string, string>;
-  timezones: string[];
-  currencies: Record<string, {name: string; symbol: string}>;
-  flags: {svg: string};
-}
+
 const Favourites: FC<{item: Country[]; setFav: (args: Country[]) => void}> = ({
   item,
   setFav,
@@ -32,7 +23,6 @@ const Favourites: FC<{item: Country[]; setFav: (args: Country[]) => void}> = ({
   }, [item]);
   const filterArray = () => {
     const uniqueSet = new Set(item);
-    // const value = Array.from(uniqueSet).map(str => str);
     setFavData([...uniqueSet]);
   };
   return (
@@ -51,7 +41,6 @@ const Favourites: FC<{item: Country[]; setFav: (args: Country[]) => void}> = ({
             <TouchableOpacity
               onPress={() => {
                 setFav([]);
-                setFavData([]);
               }}
               style={styles.clear}>
               <Text
@@ -73,7 +62,7 @@ const Favourites: FC<{item: Country[]; setFav: (args: Country[]) => void}> = ({
                 style={[
                   styles.flatlist,
                   {
-                    backgroundColor: isDarkMode ? '#3d3f45' : '#fff',
+                    backgroundColor: isDarkMode ? '#2f3033' : '#fff',
                     borderColor: isDarkMode ? '#5d5e61' : '#dedfe3',
                   },
                 ]}>
@@ -131,7 +120,7 @@ const styles = StyleSheet.create({
     margin: 10,
     borderRadius: 15,
     padding: 10,
-    borderWidth: 3.5,
+    borderWidth: 2,
     borderColor: '#dedfe3',
   },
   map: {

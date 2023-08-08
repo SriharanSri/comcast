@@ -1,27 +1,8 @@
-import React, {FC, useEffect, useMemo, useState} from 'react';
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  useColorScheme,
-  View,
-  ActivityIndicator,
-  TouchableOpacity,
-} from 'react-native';
+import React, {FC} from 'react';
+import {StyleSheet, useColorScheme, View, TouchableOpacity} from 'react-native';
 import {SvgUri} from 'react-native-svg';
 import Icon2 from 'react-native-vector-icons/Fontisto';
 import TextComponent from './TextComponent';
-
-interface Country {
-  capital: string[];
-  name: {common: string};
-  population: number;
-  area: number;
-  languages: Record<string, string>;
-  timezones: string[];
-  currencies: Record<string, {name: string; symbol: string}>;
-  flags: {svg: string};
-}
 
 const CountryCard: FC<{
   item: Country;
@@ -34,7 +15,7 @@ const CountryCard: FC<{
       style={[
         styles.flatlist,
         {
-          backgroundColor: isDarkMode ? '#3d3f45' : '#fff',
+          backgroundColor: isDarkMode ? '#2f3033' : '#fff',
           borderColor: isDarkMode ? '#5d5e61' : '#dedfe3',
         },
       ]}>
@@ -89,7 +70,7 @@ const styles = StyleSheet.create({
     margin: 10,
     borderRadius: 15,
     padding: 10,
-    borderWidth: 3.5,
+    borderWidth: 2,
     borderColor: '#dedfe3',
   },
   map: {

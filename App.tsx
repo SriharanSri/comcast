@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, {useState} from 'react';
+import React, {FC, useState} from 'react';
 import {
   FlatList,
   Image,
@@ -14,29 +14,15 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import Icon from 'react-native-vector-icons/FontAwesome5';
-import Icon1 from 'react-native-vector-icons/MaterialIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Favourites from './components/Favourites';
 import CountryCard from './components/ContryCard';
 import TextComponent from './components/TextComponent';
+import Search from './components/Search';
 
-interface Country {
-  capital: string[];
-  name: {common: string};
-  population: number;
-  area: number;
-  languages: Record<string, string>;
-  timezones: string[];
-  currencies: Record<string, {name: string; symbol: string}>;
-  flags: {svg: string};
-}
-
-function App(): JSX.Element {
+const App: FC = () => {
   const isDarkMode = useColorScheme() === 'dark';
   const themeBackground = isDarkMode ? Colors.darker : Colors.lighter;
-  const themeText = isDarkMode ? Colors.lighter : Colors.darker;
-  const [search, setSearch] = useState('');
   const [fav, setFav] = useState<Country[]>([]);
   const [loading, setLoading] = useState(false);
   const [errorHandle, setErrorHandle] = useState(false);
@@ -44,7 +30,7 @@ function App(): JSX.Element {
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
-  const fetchdata = async (key: string) => {
+  const searchCountry = async (key: string) => {
     console.log(key);
     try {
       setLoading(true);
@@ -58,7 +44,7 @@ function App(): JSX.Element {
         return;
       }
       const response = await axios.get(
-        `https://restcountries.com/v3.1/name/${search}?fullText=true`,
+        `https://restcountries.com/v3.1/name/${key}?fullText=true`,
       );
       console.log('api');
       await AsyncStorage.setItem(
@@ -76,7 +62,7 @@ function App(): JSX.Element {
     }
   };
   const addFavourites = (item: Country) => {
-    setFav(oldArray => [...oldArray, item]);
+    setFav([...fav, item]);
   };
   return (
     <SafeAreaView
@@ -98,7 +84,8 @@ function App(): JSX.Element {
           align="center">
           Country Explorer
         </TextComponent>
-        <View style={styles.searchContainer}>
+        <Search onSearchCountry={searchCountry} />
+        {/* <View style={styles.searchContainer}>
           <TextInput
             style={{flex: 1, color: themeText}}
             value={search}
@@ -120,9 +107,9 @@ function App(): JSX.Element {
             style={styles.searchArea}>
             <Icon name="search" size={20} color="grey" />
           </TouchableOpacity>
-        </View>
+        </View> */}
 
-        {countryData.length > 0 && countryData && (
+        {countryData.length > 0 && (
           <FlatList
             data={countryData}
             style={styles.flat}
@@ -144,36 +131,9 @@ function App(): JSX.Element {
       </View>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  title: {
-    fontWeight: 'bold',
-    fontSize: 20,
-    textAlign: 'center',
-  },
-  tinyLogo: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    marginRight: 10,
-  },
   searchContainer: {
     flexDirection: 'row',
     borderWidth: 0.5,
@@ -184,10 +144,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginHorizontal: 6,
     marginBottom: 20,
-  },
-  logo: {
-    width: 27,
-    height: 27,
   },
   errText: {
     textAlign: 'center',
