@@ -3,7 +3,6 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  TouchableWithoutFeedback,
   View,
   useColorScheme,
 } from 'react-native';
@@ -27,7 +26,6 @@ const Favourites: FC<{item: Country[]; setFav: (args: Country[]) => void}> = ({
   setFav,
 }) => {
   const isDarkMode = useColorScheme() === 'dark';
-  const themeText = isDarkMode ? Colors.lighter : Colors.darker;
   const [favData, setFavData] = useState<Country[]>([]);
   useEffect(() => {
     filterArray();

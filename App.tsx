@@ -1,6 +1,5 @@
 import axios from 'axios';
-import React, {useEffect, useMemo, useState} from 'react';
-import type {PropsWithChildren} from 'react';
+import React, {useState} from 'react';
 import {
   FlatList,
   Image,
@@ -14,11 +13,9 @@ import {
   ActivityIndicator,
   TouchableOpacity,
 } from 'react-native';
-import {SvgUri} from 'react-native-svg';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Icon1 from 'react-native-vector-icons/MaterialIcons';
-import Icon2 from 'react-native-vector-icons/Fontisto';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Favourites from './components/Favourites';
 import CountryCard from './components/ContryCard';
