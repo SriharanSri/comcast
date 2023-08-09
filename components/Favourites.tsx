@@ -38,6 +38,7 @@ const Favourites: FC<{item: Country[]; setFav: (args: Country[]) => void}> = ({
               Your Favourites
             </TextComponent>
             <TouchableOpacity
+              testID="clear-button"
               onPress={() => {
                 setFav([]);
               }}

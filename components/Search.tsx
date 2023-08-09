@@ -28,6 +28,7 @@ const Search: FC<{onSearchCountry: (args: string) => void}> = ({
       />
       {search.length > 0 && (
         <TouchableOpacity
+          testID={'clear-button'}
           onPress={() => setSearch('')}
           style={styles.searchArea}>
           <Clear name="clear" size={25} color="grey" />
@@ -35,6 +36,7 @@ const Search: FC<{onSearchCountry: (args: string) => void}> = ({
       )}
 
       <TouchableOpacity
+        testID={'search-button'}
         onPress={() => onSearchCountry(search)}
         disabled={search.length < 1}
         style={styles.searchArea}>

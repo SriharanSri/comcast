@@ -35,10 +35,16 @@ const CountryCard: FC<{
           </TextComponent>
         </View>
         <View style={{flexDirection: 'row'}}>
-          <SvgUri height={50} width={70} uri={item?.flags?.svg} />
+          <SvgUri
+            testID={'country-flag'}
+            height={50}
+            width={70}
+            uri={item?.flags?.svg}
+          />
 
           <TouchableOpacity
             onPress={() => addFavourites(item)}
+            testID="favorite-button"
             style={styles.searchArea}>
             <Favorite name="favorite" size={25} color="#a39350" />
           </TouchableOpacity>
