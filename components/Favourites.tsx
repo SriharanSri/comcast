@@ -10,7 +10,6 @@ import Clear from 'react-native-vector-icons/AntDesign';
 import {SvgUri} from 'react-native-svg';
 import React, {FC, useEffect, useState} from 'react';
 import TextComponent from './TextComponent';
-
 const Favourites: FC<{item: Country[]; setFav: (args: Country[]) => void}> = ({
   item,
   setFav,

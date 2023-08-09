@@ -41,7 +41,6 @@ const CountryCard: FC<{
             width={70}
             uri={item?.flags?.svg}
           />
-
           <TouchableOpacity
             onPress={() => addFavourites(item)}
             testID="favorite-button"
@@ -61,7 +60,7 @@ const CountryCard: FC<{
       </TextComponent>
       <TextComponent>Timezone : {item?.timezones.join(', ')}</TextComponent>
       <TextComponent>
-        Currency :{item?.currencies[Object.keys(item?.currencies)[0]]?.name}{' '}
+        Currency : {item?.currencies[Object.keys(item?.currencies)[0]]?.name}{' '}
         {item?.currencies[Object.keys(item?.currencies)[0]]?.symbol}
       </TextComponent>
     </View>
